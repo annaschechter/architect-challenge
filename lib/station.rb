@@ -2,10 +2,15 @@ class Station
 
 	def initialize
 		@people = []
+		@trains = []
 	end
 
 	def passenger_count
 		@people.count
+	end
+
+	def train_count
+		@trains.count
 	end
 
 	def let_in(passenger)
@@ -17,13 +22,12 @@ class Station
 		@people.delete(passenger)
 	end
 
-	def accept_trains(train)
-		@trains = []
+	def arrive(train)
 		@trains << train
 	end
 
-	def train_count
-		@trains.count
+	def depart(train)
+		raise "This train is not at the station." if @trains.delete(train) == nil	
 	end
 
 end

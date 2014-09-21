@@ -4,6 +4,7 @@ describe Station do
 
 	let(:station) {Station.new}
 	let(:passenger) {Passenger.new(:account => 5.00)}
+	let(:train) {Train.new(3)}
 
 	it "should be able to let in passengers" do 
 		expect(station.passenger_count).to eq(0)
@@ -23,5 +24,17 @@ describe Station do
 		expect(station.passenger_count).to eq(0)
 	end
 
+	it "should accept arriving train" do
+		expect(station.train_count).to eq(0)
+		station.arrive(train)
+		expect(station.train_count).to eq(1)
+    end
+
+    it "should release departing train" do
+    	expect(station.train_count).to eq(0)
+    	station.arrive(train)
+    	station.depart(train)
+    	expect(station.train_count).to eq(0)
+    end
 
 end
