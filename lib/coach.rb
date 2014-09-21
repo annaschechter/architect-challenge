@@ -12,11 +12,15 @@ class Coach
   end
 
   def board(station, passenger)
-  	if station.let_out(passenger) == nil
-  		raise "This passenger is not at the station"
-  	else
-       @coach << passenger
-    end	
+  	  if full?
+  		 raise "This coach is full. Please try the next one."
+  	  else
+  	        if station.let_out(passenger) == nil
+  		      raise "This passenger is not at the station"
+  	        else
+              @coach << passenger
+            end
+      end	
   end
 
   def alight(station, passenger)

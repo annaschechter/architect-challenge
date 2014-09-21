@@ -34,4 +34,20 @@ describe Coach do
    	expect(coach).to be_full
    end
 
+   it "should not board passengers when it's full" do
+   	expect(coach).to_not be_full
+    passenger1 = Passenger.new(:account => 5)
+    passenger2 = Passenger.new(:account => 5)
+    passenger3 = Passenger.new(:account => 5)
+    passenger4 = Passenger.new(:account => 4)
+    station.let_in(passenger1)
+    station.let_in(passenger2)
+    station.let_in(passenger3)
+    station.let_in(passenger4)
+    coach.board(station, passenger1)
+    coach.board(station, passenger2)
+    coach.board(station, passenger3)
+    expect(lambda {coach.board(station, passenger4)}).to raise_error(RuntimeError)
+   end 
+
 end
