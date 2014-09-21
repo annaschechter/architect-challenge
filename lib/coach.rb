@@ -13,7 +13,7 @@ class Coach
 
   def board(station, passenger)
   	if station.let_out(passenger) == nil
-  		raise "This passenger is not at #{station}"
+  		raise "This passenger is not at the station"
   	else
        @coach << passenger
     end	
@@ -25,6 +25,10 @@ class Coach
   	else 
   	   station.let_in(passenger)
   	end 	
+  end
+
+  def full?
+  	passenger_count > 2
   end
 
 end

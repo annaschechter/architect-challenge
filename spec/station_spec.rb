@@ -22,5 +22,6 @@ describe Station do
 		station.let_out(passenger)
 		expect(station.passenger_count).to eq(0)
 	end
-	
+
+
 end

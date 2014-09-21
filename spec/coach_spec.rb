@@ -20,4 +20,18 @@ describe Coach do
 	 expect(coach.passenger_count).to eq(0)
    end
 
+   it "should know when it's full" do
+   	expect(coach).to_not be_full
+    passenger1 = Passenger.new(:account => 5)
+    passenger2 = Passenger.new(:account => 5)
+    passenger3 = Passenger.new(:account => 5)
+    station.let_in(passenger1)
+    station.let_in(passenger2)
+    station.let_in(passenger3)
+    coach.board(station, passenger1)
+    coach.board(station, passenger2)
+    coach.board(station, passenger3)
+   	expect(coach).to be_full
+   end
+
 end

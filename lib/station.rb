@@ -16,5 +16,14 @@ class Station
 	def let_out(passenger)
 		@people.delete(passenger)
 	end
-	
+
+	def accept_trains(train)
+		@trains = []
+		@trains << train
+	end
+
+	def train_count
+		@trains.count
+	end
+
 end
