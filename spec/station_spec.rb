@@ -3,42 +3,34 @@ require 'station'
 describe Station do 
 
 	let(:station) {Station.new}
-	let(:passenger) {Passenger.new(:account => 5.00)}
-	let(:train) {Train.new(3)}
+	let(:passenger) {double :passenger, :travelling? => true}
+	let(:passenger1) {double :passenger, :travelling? => false}
+	let(:train) {double :train}
 
 	it "should be able to let in passengers" do 
-		expect(station.passenger_count).to eq(0)
-		station.let_in(passenger)
-		expect(station.passenger_count).to eq(1)
+		expect{station.let_in(passenger)}.to change{station.people_count}.by 1
 	end
 
 	it "should only let in passengers with account balance £2 or over" do
-	   passenger = Passenger.new(:account => 1.5)
-	   expect(lambda {station.let_in(passenger)}).to raise_error(RuntimeError)
+	   expect(lambda {station.let_in(passenger1)}).to raise_error "Not enough money on your account. Please top up."
 	end
 
 	it "should be able to let passengers out" do
-		expect(station.passenger_count).to eq(0)
 		station.let_in(passenger)
-		station.let_out(passenger)
-		expect(station.passenger_count).to eq(0)
+		expect{station.let_out(passenger)}.to change{station.people_count}.by -1
 	end
 
 	it "should only let people out if they are at the station" do
-		expect(lambda {station.let_out(passenger)}).to raise_error
+		expect(lambda {station.let_out(passenger)}).to raise_error "This passenger is not at the station"
 	end
 
 	it "should accept arriving train" do
-		expect(station.train_count).to eq(0)
-		station.arrive(train)
-		expect(station.train_count).to eq(1)
+		expect{station.accept_train(train)}.to change{station.train_count}. by 1
     end
 
     it "should release departing train" do
-    	expect(station.train_count).to eq(0)
-    	station.arrive(train)
-    	station.depart(train)
-    	expect(station.train_count).to eq(0)
+    	station.accept_train(train)
+    	expect{station.release_train(train)}.to change{station.train_count}.by -1
     end
 
 end

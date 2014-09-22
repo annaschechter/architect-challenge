@@ -1,5 +1,6 @@
 require 'station'
 require 'train'
+require 'passenger'
 
 describe Passenger do 
 
@@ -17,16 +18,16 @@ describe Passenger do
     end
 
     it "should be able to enter a station with account ballance over £2" do
-        expect(station.passenger_count).to eq(0)
+        expect(station.people_count).to eq(0)
         passenger1.touch_in(station)
-        expect(station.passenger_count).to eq(1)
+        expect(station.people_count).to eq(1)
     end
 
     it "should be able to leave a station" do
-        expect(station.passenger_count).to eq(0)
+        expect(station.people_count).to eq(0)
         passenger1.touch_in(station)
         passenger1.touch_out(station)
-        expect(station.passenger_count).to eq(0)
+        expect(station.people_count).to eq(0)
     end
 
     it "should have 0.00 default account balance" do
@@ -36,13 +37,13 @@ describe Passenger do
 
     it "should be able to board the train" do
         station.let_in(passenger1)
-        station.arrive(train)
+        station.accept_train(train)
         passenger1.board_train(station, train)
-        expect(station.passenger_count).to eq(0)
+        expect(station.people_count).to eq(0)
     end 
 
     it "should only be able to board a train if passsenger is at the station" do
-        station.arrive(train)
+        station.accept_train(train)
         expect(lambda {passenger1.board_train(station, train)}).to raise_error(RuntimeError)
     end
 
@@ -57,7 +58,7 @@ describe Passenger do
         passenger1.touch_in(station)
         passenger3.touch_in(station)
         passenger4.touch_in(station)
-        station.arrive(train)
+        station.accept_train(train)
         passenger1.board_train(station, train)
         passenger3.board_train(station, train)
         passenger4.board_train(station, train)
@@ -67,14 +68,14 @@ describe Passenger do
 
     it "should be able to alight train" do
         station.let_in(passenger1)
-        station.arrive(train)
+        station.accept_train(train)
         passenger1.board_train(station, train)
         passenger1.alight_train(station, train)
-        expect(station.passenger_count).to eq(1)
+        expect(station.people_count).to eq(1)
     end
 
     it "should only be able to alight train if passenger is on the train" do
-        station.arrive(train)
+        station.accept_train(train)
         expect(lambda {passenger1.alight_train(station, train)}).to raise_error(RuntimeError)
     end
 
@@ -89,13 +90,13 @@ describe Passenger do
         passenger1.touch_in(station)
         passenger3.touch_in(station)
         passenger4.touch_in(station)
-        station.arrive(train)
+        station.accept_train(train)
         passenger1.board_train(station, train)
         passenger3.board_train(station, train)
         passenger4.board_train(station, train)
-        station.depart(train)
+        station.release_train(train)
         station2 = Station.new
-        station2.arrive(train)
+        station2.accept_train(train)
         passenger4.alight_train(station2, train)
         expect(train.coaches[1].passenger_count).to eq(0)
     end

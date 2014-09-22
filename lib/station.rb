@@ -13,7 +13,7 @@ class Station
 		@trains
 	end
 
-	def passenger_count
+	def people_count
 		@people.count
 	end
 
@@ -31,12 +31,12 @@ class Station
 		@people.delete(passenger)
 	end
 
-	def arrive(train)
+	def accept_train(train)
 		@trains << train
 	end
 
-	def depart(train)
+	def release_train(train)
 		raise "This train is not at the station." if @trains.delete(train) == nil	
 	end
-
+	
 end

@@ -1,23 +1,20 @@
-require_relative 'station'
-require_relative 'passenger'
 
 class Coach
 
   def initialize
     @passengers = []
-    @passengers
-  end
-
-  def passenger_count
-    @passengers.count
   end
 
   def passengers
     @passengers
   end
 
-  def hold_passenger?(passenger)
-    @passengers.include?(passenger)
+  def passenger_count
+    passengers.count
+  end
+
+  def full?
+    passenger_count >= 2
   end
 
   def board(station, passenger)
@@ -36,9 +33,4 @@ class Coach
        station.let_in(passenger)
     end   
   end
-
-  def full?
-    passenger_count >= 2
-  end
-
 end
