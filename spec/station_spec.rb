@@ -24,6 +24,10 @@ describe Station do
 		expect(station.passenger_count).to eq(0)
 	end
 
+	it "should only let people out if they are at the station" do
+		expect(lambda {station.let_out(passenger)}).to raise_error
+	end
+
 	it "should accept arriving train" do
 		expect(station.train_count).to eq(0)
 		station.arrive(train)

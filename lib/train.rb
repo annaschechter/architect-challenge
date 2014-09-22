@@ -3,8 +3,11 @@ require_relative 'coach'
 class Train
 
   def initialize(number=1)
-  	@coaches = []
-  	number.times {@coaches.push(Coach.new)}
+  	@coaches = Array.new(number) {Coach.new}
+  end
+
+  def coaches
+  	@coaches
   end
 
   def coach_count

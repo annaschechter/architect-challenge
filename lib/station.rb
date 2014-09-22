@@ -5,6 +5,14 @@ class Station
 		@trains = []
 	end
 
+	def people
+		@people
+	end
+
+	def trains
+		@trains
+	end
+
 	def passenger_count
 		@people.count
 	end
@@ -19,6 +27,7 @@ class Station
 	end
 
 	def let_out(passenger)
+		raise "This passenger is not at the station" unless people.include?(passenger)
 		@people.delete(passenger)
 	end
 
