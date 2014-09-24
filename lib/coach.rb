@@ -1,36 +1,30 @@
+require_relative 'station'
 
 class Coach
 
-  def initialize
-    @passengers = []
-  end
+  attr_reader :passengers
 
-  def passengers
-    @passengers
+  def initialize
+      @passengers = []
   end
 
   def passenger_count
-    passengers.count
+      @passengers.count
   end
 
   def full?
-    passenger_count >= 2
+      passenger_count >= 40
   end
 
-  def board(station, passenger)
-     raise "This coach is full. Please try the next one." if full?
-      if station.let_out(passenger) == nil
-        raise "This passenger is not at the station"
-      else
-          @passengers << passenger
-      end 
+  def board_for_coach(station, passenger)
+      raise "This coach is full. Please try the next one." if full?
+      @passengers << passenger
+      station.let_out(passenger)
   end
 
   def alight(station, passenger)
-    if @passengers.delete(passenger) == nil
-      raise "This passenger is not on this coach"
-    else 
-       station.let_in(passenger)
-    end   
+      raise "This passenger is not on this coach" if @passengers.delete(passenger) == nil 
+      station.let_in(passenger)  
   end
+
 end

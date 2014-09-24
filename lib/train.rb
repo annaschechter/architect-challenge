@@ -1,17 +1,16 @@
-require_relative 'coach'
+require_relative 'station'
 
 class Train
 
-  def initialize(number=1)
-  	@coaches = Array.new(number) {Coach.new}
-  end
+  attr_reader :coaches
 
-  def coaches
-  	@coaches
+  def initialize(number=1)
+  	  @coaches = []
+      number.times{@coaches << Coach.new}
   end
 
   def coach_count
-  	@coaches.count
+  	  @coaches.count
   end
 
 end

@@ -1,6 +1,6 @@
-require_relative 'train'
-require_relative 'coach'
 require_relative 'station'
+require_relative 'coach'
+require_relative 'train'
 
 class Passenger
 
@@ -14,6 +14,11 @@ class Passenger
 		@account > 2.00
 	end
 
+	def at_station?(station)
+		station.contain?(self)
+	end
+
+
 	def touch_in(station)
 		station.let_in(self)
 	end
@@ -23,24 +28,19 @@ class Passenger
 	end
 
     def board_train(station, train)
-        raise "This train is not at the station." unless station.trains.include?(train)
+        raise "This train is not at the station." unless station.has?(train)
   	 	num = 0        
-  	 	
-  	    if train.coaches[num].full?
-  	    	while train.coaches[num].full?
-               num += 1
-               train.coaches[num].board(station, self)
-            end
-        else
-            train.coaches[num].board(station, self)
-        end 
-   end
+  	    train.coaches[num].board_for_coach(station, self) unless train.coaches[num].full?
+  	    while train.coaches[num].full?
+            num += 1
+            train.coaches[num].board_for_coach(station, self)
+        end
+    end
+  
 
-  def alight_train(station, train)
-     raise "This train is not at the station." unless station.trains.include?(train)
-     	train.coaches.each do 
-     		|coach| coach.alight(station, self) if coach.passengers.include?(self)
-     	end
-      raise "This passenger is not on this train" unless station.people.include?(self)
-  end
+    def alight_train(station, train)
+        raise "This train is not at the station." unless station.has?(train)
+        train.coaches.each {|coach| coach.alight(station, self) if coach.passengers.include?(self)}
+        raise "This passenger is not on this train" unless self.at_station?(station)
+    end
 end

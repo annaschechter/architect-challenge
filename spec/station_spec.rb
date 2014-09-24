@@ -20,6 +20,15 @@ describe Station do
 		expect{station.let_out(passenger)}.to change{station.people_count}.by -1
 	end
 
+    it "should know if the passenger is at the station" do
+        station.let_in(passenger)
+        expect(station.contain?(passenger)).to be true
+    end
+
+    it "should know if the passenger is not at the station" do
+        expect(station.contain?(passenger)).to be false
+    end
+
 	it "should only let people out if they are at the station" do
 		expect(lambda {station.let_out(passenger)}).to raise_error "This passenger is not at the station"
 	end
