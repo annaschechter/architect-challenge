@@ -18,13 +18,13 @@ class Passenger
 		station.contain?(self)
 	end
 
-
 	def touch_in(station)
 		station.let_in(self)
 	end
 
 	def touch_out(station)
 		station.let_out(self)
+		@account = @account.to_i - 2
 	end
 
     def board_train(station, train)
@@ -36,7 +36,6 @@ class Passenger
             train.coaches[num].board_for_coach(station, self)
         end
     end
-  
 
     def alight_train(station, train)
         raise "This train is not at the station." unless station.has?(train)

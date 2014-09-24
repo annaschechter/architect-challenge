@@ -17,8 +17,7 @@ class Coach
   end
 
   def board_for_coach(station, passenger)
-      raise "This person is not at the station" unless passenger.at_station?(station)
-      raise "This coach is full. Please try the next one." if full?
+      boarding_test(station, passenger)
       @passengers << passenger
       station.let_out(passenger)
   end
@@ -27,5 +26,11 @@ class Coach
       raise "This passenger is not on this coach" if @passengers.delete(passenger) == nil 
       station.let_in(passenger)  
   end
+
+  def boarding_test(station, passenger)
+      raise "This person is not at the station" unless passenger.at_station?(station)
+      raise "This coach is full. Please try the next one." if full?
+  end
+
 
 end
