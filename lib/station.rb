@@ -30,11 +30,12 @@ class Station
 	end
 
 	def let_out(passenger)
-		raise "This passenger is not at the station" unless @people.include?(passenger)
+		raise "This passenger is not at the station." unless @people.include?(passenger)
 		@people.delete(passenger)
 	end
 
 	def accept_train(train)
+		raise "This is not a train." unless train.class == Train
 		@trains << train
 	end
 
