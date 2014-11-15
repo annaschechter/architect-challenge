@@ -5,7 +5,7 @@ describe Station do
 	let(:station) {Station.new}
 	let(:passenger) {double :passenger, :travelling? => true}
 	let(:passenger1) {double :passenger, :travelling? => false}
-	let(:train) {double :train}
+	let(:train) {double :train, :class => Train}
 
 	it "should be able to let in passengers" do 
 		expect{station.let_in(passenger)}.to change{station.people_count}.by 1
@@ -30,7 +30,7 @@ describe Station do
     end
 
 	it "should only let people out if they are at the station" do
-		expect(lambda {station.let_out(passenger)}).to raise_error "This passenger is not at the station"
+		expect(lambda {station.let_out(passenger)}).to raise_error "This passenger is not at the station."
 	end
 
 	it "should accept arriving train" do
